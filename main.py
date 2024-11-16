@@ -1,3 +1,4 @@
+import os
 def init():
     myFeeling = int(input('como vc esta se sentindo hoje?'))
     observation = input('digite um texto (opcional)')
@@ -17,6 +18,23 @@ def init():
     elif myFeeling == 5:
         return 5, observation
 
-today = init()
-print(today) #retornando tipo tuple
+#today = init()
+#print(today) #retornando tipo tuple
 
+def verifyData():
+    if os.path.exists('data.txt'):
+        print('existe')
+    else:
+        os.system('echo Contagem: 0 > data.txt')
+        os.system(fr'attrib -H C:\Users\{os.getlogin()}\MirandaAV\serial_key.txt') #desoculta
+        os.system(fr'attrib +H C:\Users\{os.getlogin()}\MirandaAV\serial_key.txt') #oculta
+
+def getContagem():
+    file = open('data.txt', 'r')
+    contagem = file.readlines()
+    file.close()
+    contagem = contagem[0][-3]
+    return contagem
+
+# contagem = getContagem()
+# print(contagem)
