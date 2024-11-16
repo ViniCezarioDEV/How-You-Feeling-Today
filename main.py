@@ -1,5 +1,5 @@
 import os
-def init():
+def FeelingToday():
     myFeeling = int(input('como vc esta se sentindo hoje?'))
     observation = input('digite um texto (opcional)')
     # 1 muito triste
@@ -18,23 +18,46 @@ def init():
     elif myFeeling == 5:
         return 5, observation
 
-#today = init()
-#print(today) #retornando tipo tuple
-
-def verifyData():
+def Data():
     if os.path.exists('data.txt'):
         print('existe')
     else:
         os.system('echo Contagem: 0 > data.txt')
-        os.system(fr'attrib -H C:\Users\{os.getlogin()}\MirandaAV\serial_key.txt') #desoculta
-        os.system(fr'attrib +H C:\Users\{os.getlogin()}\MirandaAV\serial_key.txt') #oculta
+        os.system(fr'attrib +H data.txt') #oculta
 
-def getContagem():
-    file = open('data.txt', 'r')
-    contagem = file.readlines()
-    file.close()
-    contagem = contagem[0][-3]
-    return contagem
+def GetContagem():
+    with open('data.txt', 'r') as file:
+        contagem = file.readlines()[0] #apenas a primeira linha
+        if "Contagem:" in contagem:
+          partes = contagem.split("Contagem: ")
+          if len(partes) > 1 and partes[1].strip().isdigit():
+            return int(partes[1].strip())
+    return 0
 
-# contagem = getContagem()
-# print(contagem)
+
+def UpdateContagem():
+    with open('data.txt', 'r') as file:
+        linhas = file.readlines()
+
+    # Atualiza a contagem na primeira linha
+    contagem_atual = GetContagem()  # Pega a contagem atual
+    nova_contagem = contagem_atual + 1
+    linhas[0] = f"Contagem: {nova_contagem}\n"
+
+    # Escreve as linhas de volta no arquivo
+    os.system(fr'attrib -H data.txt') #desoculta
+    with open('data.txt', 'w') as file:
+        file.writelines(linhas)
+    os.system(fr'attrib +H data.txt') #oculta
+
+
+def SetData():
+    with open('data.txt', 'a') as file:
+        data = FeelingToday()
+        file.write(f'{data[0]}:{data[1]}')
+
+# Fluxo do programa
+Data()
+SetData()
+UpdateContagem()
+
