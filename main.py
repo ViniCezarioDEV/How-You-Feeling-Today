@@ -67,6 +67,7 @@ def SetData():
     with open('data.txt', 'a') as file:
         data = FeelingToday()
         file.write(f'{data[0]}:{data[1]}\n')
+        #linha.split(':') -> linha = ['1','texto']
 
 # Fluxo do programa
 Data()
