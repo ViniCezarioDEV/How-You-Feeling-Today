@@ -34,6 +34,18 @@ def GetContagem():
             return int(partes[1].strip())
     return 0
 
+def VerifyContagem():
+    contagem = GetContagem()
+    if contagem > 7:
+        pass
+        #gerar o grafico
+        #feedback mediante grafico
+        #apagar o arquivo data.txt
+
+        #assim que executar o script pela segunda vez com 1 registro,
+        #o data.txt ainda estará aqui, mas quando der 7 registros,
+        #apagará o data.txt, pois assim, é so executar o script dnv sem nenhum problema
+
 
 def UpdateContagem():
     with open('data.txt', 'r') as file:
@@ -54,7 +66,7 @@ def UpdateContagem():
 def SetData():
     with open('data.txt', 'a') as file:
         data = FeelingToday()
-        file.write(f'{data[0]}:{data[1]}')
+        file.write(f'{data[0]}:{data[1]}\n')
 
 # Fluxo do programa
 Data()
